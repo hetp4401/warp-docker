@@ -76,7 +76,4 @@ if [ -n "$WARP_ENABLE_NAT" ]; then
 fi
 
 
-sudo nginx -g 'daemon off;' &
-
-# start the proxy
-gost $GOST_ARGS
+sudo nginx -g 'daemon off;'
