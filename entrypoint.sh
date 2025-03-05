@@ -75,5 +75,8 @@ if [ -n "$WARP_ENABLE_NAT" ]; then
     sudo nft add rule ip6 mangle forward tcp flags syn tcp option maxseg size set rt mtu
 fi
 
+
+sudo nginx -g 'daemon off;' &
+
 # start the proxy
 gost $GOST_ARGS
