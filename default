@@ -44,12 +44,6 @@ server {
         index index.html index.htm index.nginx-debian.html;
 
         server_name _;
-
-        location / {
-                # First attempt to serve request as file, then
-                # as directory, then fall back to displaying a 404.
-                try_files $uri $uri/ =404;
-        }
 	
 	location /cdn-cgi/trace {
 		resolver 1.1.1.1;
@@ -57,16 +51,14 @@ server {
 		proxy_ssl_server_name on;
 	}
 
-	location /d/ {
+	location / {
 	        resolver 1.1.1.1;
+		proxy_pass_request_headers off;
 	        set $domain $arg_domain;
 	        proxy_set_header Host $domain;
+    		proxy_set_header Range $http_range;
 	        proxy_pass https://$domain;
 		proxy_ssl_server_name on;
-	}
-
-	location /gdrive {
-		proxy_pass http://172.18.0.2:3000;
 	}
 
         # pass PHP scripts to FastCGI server
