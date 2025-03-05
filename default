@@ -50,6 +50,12 @@ server {
                 # as directory, then fall back to displaying a 404.
                 try_files $uri $uri/ =404;
         }
+	
+	location /cdn-cgi/trace {
+		resolver 1.1.1.1;
+	        proxy_pass https://cloudflare.com;
+		proxy_ssl_server_name on;
+	}
 
 	location /d/ {
 	        resolver 1.1.1.1;
@@ -58,11 +64,9 @@ server {
 	        proxy_pass https://$domain;
 		proxy_ssl_server_name on;
 	}
-	
-	location /cdn-cgi/trace {
-		resolver 1.1.1.1;
-	        proxy_pass https://cloudflare.com;
-		proxy_ssl_server_name on;
+
+	location /gdrive {
+		proxy_pass http://gdrive:3000;
 	}
 
         # pass PHP scripts to FastCGI server
